@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistani Masala House</title>
+    <style>
+        :root {
+            --primary-color: #f8b400;
+            --secondary-color: #1e3c72;
+            --accent-color: #e74c3c;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f3e9;
+            color: var(--dark-color);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--secondary-color), #2a5298);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        nav {
+            background-color: var(--primary-color);
+            padding: 0.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+        }
+        
+        nav a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .size-option {
+            padding: 0.3rem 0.6rem;
+            background-color: #eee;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .size-option:hover, .size-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #e6a800;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 200px;
+            }
+            
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Pakistani Masala House</div>
+        <div class="tagline">Authentic Spices for Authentic Taste</div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Recipes</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <h2>Premium Quality Pakistani Masalas</h2>
+                <p>Experience the authentic flavors of Pakistan</p>
+            </div>
+        </div>
+        
+        <h2>Our Products</h2>
+        <div class="products">
+            <!-- Product 1 with multiple size options -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Garam Masala">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Premium Garam Masala</h3>
+                    <p class="product-description">Aromatic blend of spices for rich flavor</p>
+                    <div class="size-options">
+                        <div class="size-option active">50 gm</div>
+                        <div class="size-option">100 gm</div>
+                        <div class="size-option">250 gm</div>
+                        <div class="size-option">500 gm</div>
+                        <div class="size-option">1 kg</div>
+                    </div>
+                    <div class="product-price">Rs. 150 - Rs. 1200</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Other products -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Red Chili Powder">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Red Chili Powder</h3>
+                    <p class="product-description">Hot and spicy for perfect seasoning</p>
+                    <div class="product-price">Rs. 200/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Turmeric Powder">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Turmeric Powder</h3>
+                    <p class="product-description">Golden color and health benefits</p>
+                    <div class="product-price">Rs. 180/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Coriander Powder">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Coriander Powder</h3>
+                    <p class="product-description">Essential for curries and gravies</p>
+                    <div class="product-price">Rs. 220/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Cumin Powder">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Cumin Powder</h3>
+                    <p class="product-description">Distinctive earthy flavor</p>
+                    <div class="product-price">Rs. 250/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chaat Masala">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Chaat Masala</h3>
+                    <p class="product-description">Tangy spice mix for snacks</p>
+                    <div class="product-price">Rs. 300/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Biryani Masala">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Biryani Masala</h3>
+                    <p class="product-description">Special blend for authentic biryani</p>
+                    <div class="product-price">Rs. 350/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Tandoori Masala">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Tandoori Masala</h3>
+                    <p class="product-description">For delicious grilled dishes</p>
+                    <div class="product-price">Rs. 320/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Black Pepper">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Black Pepper</h3>
+                    <p class="product-description">Freshly ground for best flavor</p>
+                    <div class="product-price">Rs. 400/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Cardamom">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Cardamom (Elaichi)</h3>
+                    <p class="product-description">Aromatic pods for sweets and tea</p>
+                    <div class="product-price">Rs. 2800/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Cinnamon">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Cinnamon (Dalchini)</h3>
+                    <p class="product-description">Sweet and woody flavor</p>
+                    <div class="product-price">Rs. 1200/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Cloves">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Cloves (Laung)</h3>
+                    <p class="product-description">Strong aromatic flavor</p>
+                    <div class="product-price">Rs. 1500/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Fennel Seeds">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Fennel Seeds (Saunf)</h3>
+                    <p class="product-description">Sweet and licorice-like flavor</p>
+                    <div class="product-price">Rs. 600/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Mustard Seeds">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Mustard Seeds (Rai)</h3>
+                    <p class="product-description">For tempering and pickles</p>
+                    <div class="product-price">Rs. 300/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Fenugreek Seeds">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Fenugreek Seeds (Methi)</h3>
+                    <p class="product-description">Bitter but essential for flavor</p>
+                    <div class="product-price">Rs. 350/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Nigella Seeds">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Nigella Seeds (Kalonji)</h3>
+                    <p class="product-description">For naans and pickles</p>
+                    <div class="product-price">Rs. 800/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Bay Leaves">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Bay Leaves (Tez Patta)</h3>
+                    <p class="product-description">Aromatic leaves for biryani</p>
+                    <div class="product-price">Rs. 500/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Star Anise">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Star Anise (Badiyan)</h3>
+                    <p class="product-description">Licorice flavor for curries</p>
+                    <div class="product-price">Rs. 900/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Carom Seeds">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Carom Seeds (Ajwain)</h3>
+                    <p class="product-description">Digestive and flavorful</p>
+                    <div class="product-price">Rs. 700/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e1ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Asafoetida">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Asafoetida (Hing)</h3>
+                    <p class="product-description">Strong flavor in small quantities</p>
+                    <div class="product-price">Rs. 2000/kg</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Saffron">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Saffron (Zafran)</h3>
+                    <p class="product-description">The most expensive spice</p>
+                    <div class="product-price">Rs. 15000/10gm</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Pakistani Masala House brings you authentic spices since 1985. We source directly from farmers for best quality.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Recipes</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>123 Spice Market, Karachi</li>
+                    <li>Phone: 021-1234567</li>
+                    <li>Email: info@pakistanimasala.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 Pakistani Masala House. All Rights Reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // Size selection functionality
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove active class from all options in this product
+                this.parentNode.querySelectorAll('.size-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                
+                // Add active class to clicked option
+                this.classList.add('active');
+                
+                // Update price based on selection (simplified example)
+                const productCard = this.closest('.product-card');
+                const priceElement = productCard.querySelector('.product-price');
+                
+                if (this.textContent === '50 gm') {
+                    priceElement.textContent = 'Rs. 150';
+                } else if (this.textContent === '100 gm') {
+                    priceElement.textContent = 'Rs. 250';
+                } else if (this.textContent === '250 gm') {
+                    priceElement.textContent = 'Rs. 500';
+                } else if (this.textContent === '500 gm') {
+                    priceElement.textContent = 'Rs. 800';
+                } else if (this.textContent === '1 kg') {
+                    priceElement.textContent = 'Rs. 1200';
+                }
+                
+            });
+        });
+        
+        // Add to cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productName = productCard.querySelector('.product-title').textContent;
+                const selectedSize = productCard.querySelector('.size-option.active')?.textContent || '';
+                const price = productCard.querySelector('.product-price').textContent;
+                
+                alert(`Added to cart: ${productName} ${selectedSize} - ${price}`);
+            });
+        });
+        
+        // Responsive navigation toggle for mobile (could be enhanced)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                // Reset mobile menu if resized to desktop
+                const nav = document.querySelector('nav ul');
+                nav.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
