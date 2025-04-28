@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PakGrocers - Online Grocery Store Pakistan</title>
+    <title>PakGrocers - Online Grocery & Bakery Store Pakistan</title>
     <style>
         /* CSS Styles */
         * {
@@ -64,7 +64,7 @@
         }
         
         .banner {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1200x300');
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
             height: 300px;
@@ -80,6 +80,7 @@
         .banner h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .categories {
@@ -90,6 +91,7 @@
             border-bottom: 2px solid #046a38;
             padding-bottom: 0.5rem;
             margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
         
         .category-list {
@@ -106,17 +108,41 @@
             flex: 1 0 200px;
             text-align: center;
             transition: transform 0.3s;
+            cursor: pointer;
         }
         
         .category:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .products-section {
+            margin: 3rem 0;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title h3 {
+            border-bottom: 2px solid #046a38;
+            padding-bottom: 0.5rem;
+            font-size: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .view-all {
+            color: #046a38;
+            text-decoration: none;
+            font-weight: bold;
         }
         
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
         }
         
         .product {
@@ -124,11 +150,12 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
         
         .product:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .product-image {
@@ -145,12 +172,21 @@
         .product-title {
             font-weight: bold;
             margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
         
         .product-price {
             color: #046a38;
             font-weight: bold;
             margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .product-price .original {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
         }
         
         .product-brand {
@@ -168,10 +204,23 @@
             text-decoration: none;
             font-weight: bold;
             margin-top: 0.5rem;
+            width: 100%;
+            text-align: center;
         }
         
         .buy-now:hover {
             background-color: #e05d00;
+        }
+        
+        .discount-badge {
+            background-color: #ff6a00;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 0.5rem;
         }
         
         footer {
@@ -186,12 +235,23 @@
             display: flex;
             justify-content: center;
             margin: 1rem 0;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
             color: white;
             margin: 0 1rem;
             text-decoration: none;
+        }
+        
+        .social-icons {
+            margin: 1rem 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
         }
         
         @media (max-width: 768px) {
@@ -207,19 +267,24 @@
             nav li {
                 margin: 0.3rem 0;
             }
+            
+            .banner h2 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">PakGrocers</div>
-        <div class="tagline">Your Online Grocery Store in Pakistan</div>
+        <div class="tagline">Your Online Grocery & Bakery Store in Pakistan</div>
     </header>
     
     <nav>
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">Categories</a></li>
+            <li><a href="#">Groceries</a></li>
+            <li><a href="#">Bakery</a></li>
             <li><a href="#">Daily Deals</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
@@ -228,7 +293,7 @@
     <div class="container">
         <div class="banner">
             <div>
-                <h2>Fresh Groceries Delivered to Your Doorstep</h2>
+                <h2>Fresh Groceries & Bakery Items Delivered</h2>
                 <p>Shop the best Pakistani brands at affordable prices</p>
             </div>
         </div>
@@ -249,76 +314,169 @@
                     <h4>Beverages</h4>
                 </div>
                 <div class="category">
-                    <h4>Snacks</h4>
+                    <h4>Bakery & Biscuits</h4>
+                </div>
+                <div class="category">
+                    <h4>Cakes & Desserts</h4>
                 </div>
             </div>
         </div>
         
-        <h3>Featured Products</h3>
-        <div class="products">
-            <!-- Product 1 -->
-            <div class="product">
-                <div class="product-image" style="background-image: url('https://via.placeholder.com/300x200');"></div>
-                <div class="product-info">
-                    <div class="product-title">National Kheer Mix</div>
-                    <div class="product-brand">National Foods</div>
-                    <div class="product-price">Rs. 220</div>
-                    <a href="https://www.daraz.pk/national-kheer-mix-100g-13004581.html" class="buy-now" target="_blank">Buy on Daraz</a>
+        <!-- Grocery Products Section -->
+        <div class="products-section">
+            <div class="section-title">
+                <h3>Popular Grocery Items</h3>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="products">
+                <!-- Product 1 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">National Kheer Mix</div>
+                        <div class="product-brand">National Foods</div>
+                        <div class="product-price">Rs. 220 <span class="original">Rs. 250</span> <span class="discount-badge">12% OFF</span></div>
+                        <a href="https://www.daraz.pk/national-kheer-mix-100g-13004581.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1601643157091-ce5c665179ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Shan Biryani Masala</div>
+                        <div class="product-brand">Shan Foods</div>
+                        <div class="product-price">Rs. 150</div>
+                        <a href="https://www.daraz.pk/shan-biryani-masala-100g-13004582.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Nestlé Milkpak UHT Milk</div>
+                        <div class="product-brand">Nestlé</div>
+                        <div class="product-price">Rs. 180 <span class="original">Rs. 200</span> <span class="discount-badge">10% OFF</span></div>
+                        <a href="https://www.daraz.pk/nestle-milkpak-uht-milk-1l-13004583.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Mitchell's Fruit Jam</div>
+                        <div class="product-brand">Mitchell's</div>
+                        <div class="product-price">Rs. 320</div>
+                        <a href="https://www.daraz.pk/mitchells-fruit-jam-500g-13004584.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Product 2 -->
-            <div class="product">
-                <div class="product-image" style="background-image: url('https://via.placeholder.com/300x200');"></div>
-                <div class="product-info">
-                    <div class="product-title">Shan Biryani Masala</div>
-                    <div class="product-brand">Shan Foods</div>
-                    <div class="product-price">Rs. 150</div>
-                    <a href="https://www.daraz.pk/shan-biryani-masala-100g-13004582.html" class="buy-now" target="_blank">Buy on Daraz</a>
+        </div>
+        
+        <!-- Bakery Products Section -->
+        <div class="products-section">
+            <div class="section-title">
+                <h3>Bakery & Biscuits</h3>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="products">
+                <!-- Product 1 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1587241321921-91a834d6d191?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">English Cake Fruit</div>
+                        <div class="product-brand">English Biscuit Manufacturers</div>
+                        <div class="product-price">Rs. 450 <span class="original">Rs. 500</span> <span class="discount-badge">10% OFF</span></div>
+                        <a href="https://www.daraz.pk/english-cake-fruit-400g-13004585.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Peek Freans Sooper Biscuit</div>
+                        <div class="product-brand">Peek Freans</div>
+                        <div class="product-price">Rs. 120</div>
+                        <a href="https://www.daraz.pk/peek-freans-sooper-biscuit-200g-13004586.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Butter Cookies Tin</div>
+                        <div class="product-brand">Shan Foods</div>
+                        <div class="product-price">Rs. 650 <span class="original">Rs. 700</span> <span class="discount-badge">7% OFF</span></div>
+                        <a href="https://www.daraz.pk/butter-cookies-tin-500g-13004587.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1542826438-bd32f43d626f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Cake Rusk</div>
+                        <div class="product-brand">Bisconni</div>
+                        <div class="product-price">Rs. 180</div>
+                        <a href="https://www.daraz.pk/cake-rusk-200g-13004588.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Product 3 -->
-            <div class="product">
-                <div class="product-image" style="background-image: url('https://via.placeholder.com/300x200');"></div>
-                <div class="product-info">
-                    <div class="product-title">Nestlé Milkpak UHT Milk</div>
-                    <div class="product-brand">Nestlé</div>
-                    <div class="product-price">Rs. 180</div>
-                    <a href="https://www.daraz.pk/nestle-milkpak-uht-milk-1l-13004583.html" class="buy-now" target="_blank">Buy on Daraz</a>
-                </div>
+        </div>
+        
+        <!-- Cakes & Desserts Section -->
+        <div class="products-section">
+            <div class="section-title">
+                <h3>Cakes & Desserts</h3>
+                <a href="#" class="view-all">View All</a>
             </div>
-            
-            <!-- Product 4 -->
-            <div class="product">
-                <div class="product-image" style="background-image: url('https://via.placeholder.com/300x200');"></div>
-                <div class="product-info">
-                    <div class="product-title">Mitchell's Fruit Jam</div>
-                    <div class="product-brand">Mitchell's</div>
-                    <div class="product-price">Rs. 320</div>
-                    <a href="https://www.daraz.pk/mitchells-fruit-jam-500g-13004584.html" class="buy-now" target="_blank">Buy on Daraz</a>
+            <div class="products">
+                <!-- Product 1 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Chocolate Fudge Cake</div>
+                        <div class="product-brand">Butlers Chocolate</div>
+                        <div class="product-price">Rs. 1,200 <span class="original">Rs. 1,500</span> <span class="discount-badge">20% OFF</span></div>
+                        <a href="https://www.daraz.pk/chocolate-fudge-cake-1kg-13004589.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Product 5 -->
-            <div class="product">
-                <div class="product-image" style="background-image: url('https://via.placeholder.com/300x200');"></div>
-                <div class="product-info">
-                    <div class="product-title">Tapal Danedar Tea</div>
-                    <div class="product-brand">Tapal</div>
-                    <div class="product-price">Rs. 450</div>
-                    <a href="https://www.daraz.pk/tapal-danedar-tea-400g-13004585.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                
+                <!-- Product 2 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Red Velvet Cake</div>
+                        <div class="product-brand">Gourmet</div>
+                        <div class="product-price">Rs. 1,500</div>
+                        <a href="https://www.daraz.pk/red-velvet-cake-1kg-13004590.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Product 6 -->
-            <div class="product">
-                <div class="product-image" style="background-image: url('https://via.placeholder.com/300x200');"></div>
-                <div class="product-info">
-                    <div class="product-title">Kolson Vermicelli</div>
-                    <div class="product-brand">Kolson</div>
-                    <div class="product-price">Rs. 120</div>
-                    <a href="https://www.daraz.pk/kolson-vermicelli-200g-13004586.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                
+                <!-- Product 3 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Cupcakes (6 pcs)</div>
+                        <div class="product-brand">Home Bakers</div>
+                        <div class="product-price">Rs. 800</div>
+                        <a href="https://www.daraz.pk/cupcakes-6pcs-13004591.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                    <div class="product-info">
+                        <div class="product-title">Gulab Jamun Mix</div>
+                        <div class="product-brand">Noor Sweets</div>
+                        <div class="product-price">Rs. 250 <span class="original">Rs. 300</span> <span class="discount-badge">17% OFF</span></div>
+                        <a href="https://www.daraz.pk/gulab-jamun-mix-500g-13004592.html" class="buy-now" target="_blank">Buy on Daraz</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -330,7 +488,17 @@
             <a href="#">Privacy Policy</a>
             <a href="#">Terms & Conditions</a>
             <a href="#">Contact Us</a>
+            <a href="#">FAQs</a>
+            <a href="#">Delivery Information</a>
         </div>
+        
+        <div class="social-icons">
+            <a href="#">📱</a>
+            <a href="#">📘</a>
+            <a href="#">📸</a>
+            <a href="#">🐦</a>
+        </div>
+        
         <p>© 2023 PakGrocers - All Rights Reserved</p>
         <p>Partnered with Daraz Pakistan for online shopping</p>
     </footer>
