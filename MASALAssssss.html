@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistani Masala - Premium Spices</title>
+    <style>
+        :root {
+            --primary-color: #f39c12;
+            --secondary-color: #e74c3c;
+            --dark-color: #c0392b;
+            --light-color: #f9f9f9;
+            --text-color: #333;
+            --green-color: #27ae60;
+            --daraz-orange: #f57224;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fdebd0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #f1c40f;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 10px auto;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .size-option {
+            padding: 5px 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #ddd;
+        }
+        
+        .size-option:hover, .size-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--green-color);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .order-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--daraz-orange);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .order-btn:hover {
+            background-color: #e65c1a;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            margin-right: 15px;
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .nav-menu {
+                display: none;
+                width: 100%;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                height: 300px;
+            }
+            
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="lago.jpeg" alt="Pakistani Masala Logo">
+                <h1>Pakistani Masala</h1>
+            </div>
+            <div class="mobile-menu">☰</div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Authentic Pakistani Spices</h2>
+            <p>Premium quality masalas handpicked from the best sources across Pakistan</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="container" id="products">
+        <h2 class="section-title">Our Premium Masalas</h2>
+        <div class="products" id="products-container">
+            <!-- Products will be added by JavaScript -->
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>123 Spice Street, Karachi</li>
+                        <li>Phone: +92 300 1234567</li>
+                        <li>Email: info@pakistanimasala.com</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook">f</i></a>
+                        <a href="#"><i class="fab fa-instagram">i</i></a>
+                        <a href="#"><i class="fab fa-twitter">t</i></a>
+                        <a href="#"><i class="fab fa-youtube">y</i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Pakistani Masala. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Product data with different prices for each size
+        const products = [
+            {
+                id: 1,
+                name: "Chaat Masala",
+                description: "Tangy spice blend perfect for fruits, salads, and chaat.",
+                image: "download.jpeg",
+                sizes: [
+                    { size: "50gm", price: "Rs. 150", darazLink: "https://www.daraz.pk/products/chaat-masala-50gm-i12345678.html" },
+                    { size: "100gm", price: "Rs. 250", darazLink: "https://www.daraz.pk/products/chaat-masala-100gm-i12345679.html" },
+                    { size: "250gm", price: "Rs. 400", darazLink: "https://www.daraz.pk/products/chaat-masala-250gm-i12345680.html" },
+                    { size: "1kg", price: "Rs. 1200", darazLink: "https://www.daraz.pk/products/chaat-masala-1kg-i12345681.html" }
+                ]
+            },
+            {
+                id: 2,
+                name: "Garam Masala",
+                description: "Aromatic blend of spices for rich flavor in curries.",
+                image: "garam.jpeg",
+                sizes: [
+                    { size: "50gm", price: "Rs. 180", darazLink: "https://www.daraz.pk/products/garam-masala-50gm-i22345678.html" },
+                    { size: "100gm", price: "Rs. 300", darazLink: "https://www.daraz.pk/products/garam-masala-100gm-i22345679.html" },
+                    { size: "250gm", price: "Rs. 500", darazLink: "https://www.daraz.pk/products/garam-masala-250gm-i22345680.html" },
+                    { size: "1kg", price: "Rs. 1500", darazLink: "https://www.daraz.pk/products/garam-masala-1kg-i22345681.html" }
+                ]
+            },
+            {
+                id: 3,
+                name: "Biryani Masala",
+                description: "Special blend for authentic Pakistani biryani flavor.",
+                image: "biryani.jpeg",
+                sizes: [
+                    { size: "50gm", price: "Rs. 200", darazLink: "https://www.daraz.pk/products/biryani-masala-50gm-i32345678.html" },
+                    { size: "100gm", price: "Rs. 350", darazLink: "https://www.daraz.pk/products/biryani-masala-100gm-i32345679.html" },
+                    { size: "250gm", price: "Rs. 600", darazLink: "https://www.daraz.pk/products/biryani-masala-250gm-i32345680.html" },
+                    { size: "1kg", price: "Rs. 1800", darazLink: "https://www.daraz.pk/products/biryani-masala-1kg-i32345681.html" }
+                ]
+            },
+            {
+                id: 4,
+                name: "Tandoori Masala",
+                description: "Perfect for marinating meats for tandoor or grill.",
+                image: "t.jpg",
+                sizes: [
+                    { size: "50gm", price: "Rs. 170", darazLink: "https://www.daraz.pk/products/tandoori-masala-50gm-i42345678.html" },
+                    { size: "100gm", price: "Rs. 280", darazLink: "https://www.daraz.pk/products/tandoori-masala-100gm-i42345679.html" },
+                    { size: "250gm", price: "Rs. 450", darazLink: "https://www.daraz.pk/products/tandoori-masala-250gm-i42345680.html" },
+                    { size: "1kg", price: "Rs. 1400", darazLink: "https://www.daraz.pk/products/tandoori-masala-1kg-i42345681.html" }
+                ]
+            },
+            {
+                id: 5,
+                name: "Haleem Masala",
+                description: "Special blend for authentic haleem preparation.",
+                image: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                sizes: [
+                    { size: "50gm", price: "Rs. 190", darazLink: "https://www.daraz.pk/products/haleem-masala-50gm-i52345678.html" },
+                    { size: "100gm", price: "Rs. 320", darazLink: "https://www.daraz.pk/products/haleem-masala-100gm-i52345679.html" },
+                    { size: "250gm", price: "Rs. 550", darazLink: "https://www.daraz.pk/products/haleem-masala-250gm-i52345680.html" },
+                    { size: "1kg", price: "Rs. 1600", darazLink: "https://www.daraz.pk/products/haleem-masala-1kg-i52345681.html" }
+                ]
+            }
+        ];
+
+        // Display products
+        const productsContainer = document.getElementById('products-container');
+        
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="size-options">
+                        ${product.sizes.map((size, index) => `
+                            <div class="size-option ${index === 0 ? 'active' : ''}" 
+                                 data-price="${size.price}" 
+                                 data-link="${size.darazLink}">
+                                ${size.size}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <p class="product-price">${product.sizes[0].price}</p>
+                    <a href="${product.sizes[0].darazLink}" class="order-btn" target="_blank">Order on Daraz</a>
+                </div>
+            `;
+            productsContainer.appendChild(productCard);
+        });
+
+        // Size selection functionality
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove active class from all options in this product
+                this.parentNode.querySelectorAll('.size-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                
+                // Add active class to clicked option
+                this.classList.add('active');
+                
+                // Update price
+                const price = this.getAttribute('data-price');
+                this.closest('.product-info').querySelector('.product-price').textContent = price;
+                
+                // Update Daraz link
+                const darazLink = this.getAttribute('data-link');
+                this.closest('.product-info').querySelector('.order-btn').href = darazLink;
+            });
+        });
+    </script>
+</body>
+</html>
