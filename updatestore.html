@@ -54,6 +54,7 @@
             z-index: 2;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             transition: all 0.3s;
+            animation: fadeInDown 1s ease-out;
         }
         
         .logo:hover {
@@ -67,6 +68,7 @@
             position: relative;
             z-index: 2;
             opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
         
         nav {
@@ -76,6 +78,7 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            animation: slideDown 0.5s ease-out;
         }
         
         nav ul {
@@ -138,7 +141,12 @@
             border-radius: 8px;
             position: relative;
             overflow: hidden;
-            animation: fadeIn 1s ease-in;
+            animation: fadeIn 1s ease-in, pulseBackground 15s infinite alternate;
+        }
+        
+        @keyframes pulseBackground {
+            0% { background-size: 100% auto; }
+            100% { background-size: 110% auto; }
         }
         
         .banner::after {
@@ -155,13 +163,24 @@
         .banner-content {
             position: relative;
             z-index: 2;
-            animation: slideUp 1s ease-out;
+            animation: slideUp 1s ease-out, float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
         .banner h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+            100% { text-shadow: 0 0 15px rgba(255,255,255,0.7); }
         }
         
         .banner p {
@@ -217,7 +236,18 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
         }
+        
+        /* Delay animations for each category */
+        .category:nth-child(1) { animation-delay: 0.1s; }
+        .category:nth-child(2) { animation-delay: 0.2s; }
+        .category:nth-child(3) { animation-delay: 0.3s; }
+        .category:nth-child(4) { animation-delay: 0.4s; }
+        .category:nth-child(5) { animation-delay: 0.5s; }
+        .category:nth-child(6) { animation-delay: 0.6s; }
+        .category:nth-child(7) { animation-delay: 0.7s; }
         
         .category::before {
             content: '';
@@ -239,6 +269,18 @@
         
         .category:hover::before {
             opacity: 1;
+        }
+        
+        .category i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #046a38;
+            transition: all 0.3s;
+        }
+        
+        .category:hover i {
+            color: #ff6a00;
+            transform: rotate(15deg) scale(1.2);
         }
         
         .category h4 {
@@ -321,7 +363,15 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
         }
+        
+        /* Stagger product animations */
+        .products .product:nth-child(1) { animation-delay: 0.1s; }
+        .products .product:nth-child(2) { animation-delay: 0.2s; }
+        .products .product:nth-child(3) { animation-delay: 0.3s; }
+        .products .product:nth-child(4) { animation-delay: 0.4s; }
         
         .product::before {
             content: '';
@@ -553,6 +603,11 @@
             color: #ff6a00;
             width: 20px;
             text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .contact-info p:hover i {
+            transform: rotate(15deg);
         }
         
         .contact-form input,
@@ -632,12 +687,18 @@
             cursor: pointer;
             z-index: 99;
             transition: all 0.3s;
-            animation: bounce 2s infinite;
+            animation: bounce 2s infinite, glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255,106,0,0.5); }
+            100% { box-shadow: 0 0 20px rgba(255,106,0,0.8); }
         }
         
         .floating-cart:hover {
             transform: scale(1.1) translateY(-5px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation: none;
         }
         
         .cart-count {
@@ -654,6 +715,7 @@
             justify-content: center;
             font-size: 0.8rem;
             font-weight: bold;
+            transition: all 0.3s;
         }
         
         /* Back to top button */
@@ -692,6 +754,37 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from { 
+                transform: translateY(-100%);
+            }
+            to { 
+                transform: translateY(0);
+            }
         }
         
         @keyframes slideUp {
@@ -737,12 +830,18 @@
             border: 5px solid #f3f3f3;
             border-top: 5px solid #046a38;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite, colorChange 3s infinite alternate;
         }
         
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes colorChange {
+            0% { border-top-color: #046a38; }
+            50% { border-top-color: #ff6a00; }
+            100% { border-top-color: #046a38; }
         }
         
         /* Notification */
@@ -758,10 +857,39 @@
             z-index: 999;
             transform: translateX(200%);
             transition: transform 0.3s ease;
+            animation: notificationPulse 2s infinite;
+        }
+        
+        @keyframes notificationPulse {
+            0% { box-shadow: 0 0 0 0 rgba(4, 106, 56, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(4, 106, 56, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(4, 106, 56, 0); }
         }
         
         .notification.show {
             transform: translateX(0);
+        }
+        
+        /* Confetti effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            z-index: 9999;
+            animation: confettiFall 3s ease-in-out;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
         
         footer {
@@ -783,11 +911,13 @@
             height: 100%;
             background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
             z-index: 1;
+            animation: shine 3s infinite;
         }
         
         .footer-content {
             position: relative;
             z-index: 2;
+            animation: fadeIn 1s ease-in;
         }
         
         .footer-links {
@@ -846,6 +976,38 @@
             opacity: 0.8;
         }
         
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(to right, #ff6a00, #046a38);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+        
+        /* Feature highlight animation */
+        .feature-highlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            pointer-events: none;
+            animation: highlight 2s ease-out;
+        }
+        
+        @keyframes highlight {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
         @media (max-width: 768px) {
             .products {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -887,6 +1049,9 @@
     </style>
 </head>
 <body>
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+    
     <!-- Loading Screen -->
     <div class="loader">
         <div class="loader-circle"></div>
@@ -935,25 +1100,32 @@
             <h3>Shop by Category</h3>
             <div class="category-list">
                 <div class="category">
-                    <h4><i class="fas fa-apple-alt"></i> Dry Fruits & Nuts</h4>
+                    <i class="fas fa-apple-alt"></i>
+                    <h4>Dry Fruits & Nuts</h4>
                 </div>
                 <div class="category">
-                    <h4><i class="fas fa-pepper-hot"></i> Spices & Masalas</h4>
+                    <i class="fas fa-pepper-hot"></i>
+                    <h4>Spices & Masalas</h4>
                 </div>
                 <div class="category">
-                    <h4><i class="fas fa-utensils"></i> Rice & Pulses</h4>
+                    <i class="fas fa-utensils"></i>
+                    <h4>Rice & Pulses</h4>
                 </div>
                 <div class="category">
-                    <h4><i class="fas fa-coffee"></i> Beverages</h4>
+                    <i class="fas fa-coffee"></i>
+                    <h4>Beverages</h4>
                 </div>
                 <div class="category">
-                    <h4><i class="fas fa-bread-slice"></i> Bakery & Biscuits</h4>
+                    <i class="fas fa-bread-slice"></i>
+                    <h4>Bakery & Biscuits</h4>
                 </div>
                 <div class="category">
-                    <h4><i class="fas fa-birthday-cake"></i> Cakes & Desserts</h4>
+                    <i class="fas fa-birthday-cake"></i>
+                    <h4>Cakes & Desserts</h4>
                 </div>
                 <div class="category">
-                    <h4><i class="fas fa-heartbeat"></i> Wellness Drinks</h4>
+                    <i class="fas fa-heartbeat"></i>
+                    <h4>Wellness Drinks</h4>
                 </div>
             </div>
         </div>
@@ -1045,7 +1217,7 @@
                             (156)
                         </div>
                         <div class="product-price">Rs. 320</div>
-                        <a href="#" class="buy-now" onclick="addToCart(event, 'Mitchell's Fruit Jam', 320)">Add to Cart</a>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Mitchell\'s Fruit Jam', 320)">Add to Cart</a>
                     </div>
                 </div>
             </div>
@@ -1407,6 +1579,15 @@
             loader.classList.add('hidden');
         });
 
+        // Scroll indicator
+        window.addEventListener('scroll', function() {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const scrollPercentage = (scrollPosition / scrollHeight) * 100;
+            scrollIndicator.style.width = scrollPercentage + '%';
+        });
+
         // Cart functionality
         let cartCount = 0;
         const cartButton = document.getElementById('cartButton');
@@ -1420,8 +1601,10 @@
             
             // Animate cart button
             cartButton.style.transform = 'scale(1.2)';
+            cartCountElement.style.transform = 'scale(1.5)';
             setTimeout(() => {
                 cartButton.style.transform = 'scale(1)';
+                cartCountElement.style.transform = 'scale(1)';
             }, 300);
             
             // Show notification
@@ -1432,8 +1615,31 @@
                 notification.classList.remove('show');
             }, 3000);
             
+            // Create confetti effect
+            createConfetti();
+            
             // Here you would typically send the product data to your backend
             console.log(`Added to cart: ${productName} - Rs. ${price}`);
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6a00', '#046a38', '#ffc107', '#ffffff', '#01411c'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
         }
 
         // Back to top button
@@ -1460,9 +1666,21 @@
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Create a feature highlight effect
+            const highlight = document.createElement('div');
+            highlight.className = 'feature-highlight';
+            contactForm.appendChild(highlight);
+            
+            // Remove highlight after animation
+            setTimeout(() => {
+                highlight.remove();
+            }, 2000);
+            
             // Here you would typically send the form data to your backend
-            alert('Thank you for your message! We will get back to you soon.');
-            contactForm.reset();
+            setTimeout(() => {
+                alert('Thank you for your message! We will get back to you soon.');
+                contactForm.reset();
+            }, 2000);
         });
 
         // Smooth scrolling for anchor links
@@ -1505,6 +1723,28 @@
                 this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
             });
         });
+
+        // Social icon hover effects
+        const socialIcons = document.querySelectorAll('.social-icons a');
+        
+        socialIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.2)';
+            });
+            
+            icon.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add animation to banner text
+        const bannerContent = document.querySelector('.banner-content');
+        setInterval(() => {
+            bannerContent.style.animation = 'none';
+            setTimeout(() => {
+                bannerContent.style.animation = 'slideUp 1s ease-out, float 3s ease-in-out infinite';
+            }, 10);
+        }, 10000);
     </script>
 </body>
 </html>
