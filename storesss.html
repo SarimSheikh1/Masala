@@ -1,0 +1,2461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PakGrocers - Online Grocery & Bakery Store Pakistan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: #046a38; /* Pakistan green */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+            z-index: 1;
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            z-index: 2;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        nav {
+            background-color: #01411c;
+            padding: 0.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+            position: relative;
+        }
+        
+        nav li::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff6a00;
+            transition: width 0.3s ease;
+        }
+        
+        nav li:hover::after {
+            width: 100%;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem;
+            transition: all 0.3s;
+            display: block;
+        }
+        
+        nav a:hover {
+            color: #ff6a00;
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .banner {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in, pulseBackground 15s infinite alternate;
+        }
+        
+        @keyframes pulseBackground {
+            0% { background-size: 100% auto; }
+            100% { background-size: 110% auto; }
+        }
+        
+        .banner::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            animation: slideUp 1s ease-out, float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+            100% { text-shadow: 0 0 15px rgba(255,255,255,0.7); }
+        }
+        
+        .banner p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* New: Countdown Timer */
+        .countdown-timer {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+        }
+        
+        .countdown-timer span {
+            font-weight: bold;
+            margin: 0 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+        
+        /* New: Quick Delivery Banner */
+        .delivery-banner {
+            background: linear-gradient(135deg, #046a38, #01411c);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        .delivery-banner i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .categories {
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .categories h3 {
+            border-bottom: 2px solid #046a38;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .categories h3::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background-color: #ff6a00;
+            transition: width 0.3s ease;
+        }
+        
+        .categories h3:hover::after {
+            width: 100%;
+        }
+        
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .category {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            flex: 1 0 200px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        /* Delay animations for each category */
+        .category:nth-child(1) { animation-delay: 0.1s; }
+        .category:nth-child(2) { animation-delay: 0.2s; }
+        .category:nth-child(3) { animation-delay: 0.3s; }
+        .category:nth-child(4) { animation-delay: 0.4s; }
+        .category:nth-child(5) { animation-delay: 0.5s; }
+        .category:nth-child(6) { animation-delay: 0.6s; }
+        .category:nth-child(7) { animation-delay: 0.7s; }
+        
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(4,106,56,0.1) 0%, rgba(255,106,0,0.1) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .category:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .category:hover::before {
+            opacity: 1;
+        }
+        
+        .category i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #046a38;
+            transition: all 0.3s;
+        }
+        
+        .category:hover i {
+            color: #ff6a00;
+            transform: rotate(15deg) scale(1.2);
+        }
+        
+        .category h4 {
+            font-size: 1.2rem;
+            color: #046a38;
+            transition: color 0.3s;
+        }
+        
+        .category:hover h4 {
+            color: #ff6a00;
+        }
+        
+        .products-section {
+            margin: 3rem 0;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title h3 {
+            border-bottom: 2px solid #046a38;
+            padding-bottom: 0.5rem;
+            font-size: 1.5rem;
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .section-title h3::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 30%;
+            height: 3px;
+            background-color: #ff6a00;
+            transition: width 0.3s ease;
+        }
+        
+        .section-title h3:hover::after {
+            width: 100%;
+        }
+        
+        .view-all {
+            color: #046a38;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .view-all:hover {
+            color: #ff6a00;
+            transform: translateX(5px);
+        }
+        
+        .view-all i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .view-all:hover i {
+            transform: translateX(3px);
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .product {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        /* Stagger product animations */
+        .products .product:nth-child(1) { animation-delay: 0.1s; }
+        .products .product:nth-child(2) { animation-delay: 0.2s; }
+        .products .product:nth-child(3) { animation-delay: 0.3s; }
+        .products .product:nth-child(4) { animation-delay: 0.4s; }
+        
+        .product::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(4,106,56,0.1) 0%, rgba(255,106,0,0.1) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .product:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product:hover::before {
+            opacity: 1;
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product:hover .product-image {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff6a00;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .product-info {
+            padding: 1.2rem;
+            position: relative;
+        }
+        
+        .product-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        .product:hover .product-title {
+            color: #046a38;
+        }
+        
+        .product-price {
+            color: #046a38;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .product-price .original {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+        
+        .product-brand {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-rating {
+            color: #ffc107;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .buy-now {
+            display: inline-block;
+            background-color: #ff6a00;
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 0.5rem;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .buy-now::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .buy-now:hover {
+            background-color: #e05d00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,106,0,0.3);
+        }
+        
+        .buy-now:hover::before {
+            left: 100%;
+        }
+        
+        .discount-badge {
+            background-color: #ff6a00;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        /* New: Product Quick View Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #ff6a00;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .modal-body {
+                flex-direction: row;
+            }
+        }
+        
+        .modal-image {
+            flex: 1;
+            min-height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (min-width: 768px) {
+            .modal-image {
+                border-radius: 10px 0 0 10px;
+                min-height: auto;
+            }
+        }
+        
+        .modal-details {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #046a38;
+        }
+        
+        .modal-brand {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .modal-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #046a38;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .quantity-btn {
+            background-color: #f0f0f0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #046a38;
+            color: white;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            height: 30px;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+        }
+        
+        /* New: Loyalty Program Section */
+        .loyalty-section {
+            background: linear-gradient(135deg, #046a38, #01411c);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loyalty-section::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loyalty-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .loyalty-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .loyalty-description {
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .loyalty-steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .loyalty-step {
+            background-color: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 200px;
+            transition: all 0.3s;
+        }
+        
+        .loyalty-step:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .loyalty-step i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ff6a00;
+        }
+        
+        .loyalty-step h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* New: Testimonials Section */
+        .testimonials-section {
+            margin: 3rem 0;
+        }
+        
+        .testimonials-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 2rem;
+            padding: 1rem 0;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .testimonial {
+            min-width: 300px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            scroll-snap-align: start;
+            position: relative;
+        }
+        
+        .testimonial::before {
+            content: "\201C";
+            font-size: 5rem;
+            color: rgba(4, 106, 56, 0.1);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            margin-right: 1rem;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+            color: #046a38;
+        }
+        
+        .author-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .testimonial-rating {
+            color: #ffc107;
+            margin-top: 0.5rem;
+        }
+        
+        /* New: Newsletter Section */
+        .newsletter-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .newsletter-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #046a38;
+        }
+        
+        .newsletter-description {
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-submit {
+            background-color: #ff6a00;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .newsletter-submit:hover {
+            background-color: #e05d00;
+        }
+        
+        /* Contact Section Styles */
+        .contact-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .contact-section h3 {
+            border-bottom: 2px solid #046a38;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+        }
+        
+        .contact-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 30%;
+            height: 3px;
+            background-color: #ff6a00;
+            transition: width 0.3s ease;
+        }
+        
+        .contact-section h3:hover::after {
+            width: 100%;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .contact-info {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info h4 {
+            color: #046a38;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .contact-info h4::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background-color: #ff6a00;
+            transition: width 0.3s ease;
+        }
+        
+        .contact-info h4:hover::after {
+            width: 100%;
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+            transition: all 0.3s;
+        }
+        
+        .contact-info p:hover {
+            transform: translateX(5px);
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            color: #ff6a00;
+            width: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .contact-info p:hover i {
+            transform: rotate(15deg);
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #046a38;
+            box-shadow: 0 0 0 3px rgba(4,106,56,0.1);
+            outline: none;
+            transform: translateY(-2px);
+        }
+        
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #046a38;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #01411c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(4,106,56,0.3);
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Floating cart button */
+        .floating-cart {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ff6a00;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.3s;
+            animation: bounce 2s infinite, glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255,106,0,0.5); }
+            100% { box-shadow: 0 0 20px rgba(255,106,0,0.8); }
+        }
+        
+        .floating-cart:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation: none;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #046a38;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background-color: #046a38;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: #01411c;
+            transform: translateY(-3px);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from { 
+                transform: translateY(-100%);
+            }
+            to { 
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+        
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #046a38;
+            border-radius: 50%;
+            animation: spin 1s linear infinite, colorChange 3s infinite alternate;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes colorChange {
+            0% { border-top-color: #046a38; }
+            50% { border-top-color: #ff6a00; }
+            100% { border-top-color: #046a38; }
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #046a38;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            animation: notificationPulse 2s infinite;
+        }
+        
+        @keyframes notificationPulse {
+            0% { box-shadow: 0 0 0 0 rgba(4, 106, 56, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(4, 106, 56, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(4, 106, 56, 0); }
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        /* Confetti effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            z-index: 9999;
+            animation: confettiFall 3s ease-in-out;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        footer {
+            background-color: #01411c;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+            z-index: 1;
+            animation: shine 3s infinite;
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff6a00;
+            transition: width 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6a00;
+        }
+        
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+        
+        .social-icons {
+            margin: 1.5rem 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 0.8rem;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .social-icons a:hover {
+            color: #ff6a00;
+            transform: translateY(-5px) scale(1.2);
+        }
+        
+        .footer-bottom p {
+            margin: 0.5rem 0;
+            opacity: 0.8;
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(to right, #ff6a00, #046a38);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+        
+        /* Feature highlight animation */
+        .feature-highlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            pointer-events: none;
+            animation: highlight 2s ease-out;
+        }
+        
+        @keyframes highlight {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            .banner h2 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .floating-cart {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                bottom: 80px;
+                right: 20px;
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .modal-image {
+                min-height: 250px;
+                border-radius: 10px 10px 0 0 !important;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .newsletter-submit {
+                border-radius: 4px;
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+    
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="loader-circle"></div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        Item added to cart successfully!
+    </div>
+    
+    <!-- Quick View Modal -->
+    <div class="modal-overlay" id="quickViewModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="modal-body">
+                <div class="modal-image" id="modalImage"></div>
+                <div class="modal-details">
+                    <h2 class="modal-title" id="modalTitle">Product Name</h2>
+                    <p class="modal-brand" id="modalBrand">Brand Name</p>
+                    <div class="product-rating" id="modalRating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        (128)
+                    </div>
+                    <p class="modal-price" id="modalPrice">Rs. 950</p>
+                    <p class="modal-description" id="modalDescription">
+                        This is a detailed description of the product. It includes all the features, benefits, 
+                        and specifications that the customer might want to know before making a purchase.
+                    </p>
+                    
+                    <div class="quantity-selector">
+                        <label for="quantity">Quantity:</label>
+                        <button class="quantity-btn" id="decreaseQty">-</button>
+                        <input type="number" id="quantity" class="quantity-input" value="1" min="1">
+                        <button class="quantity-btn" id="increaseQty">+</button>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button class="submit-btn" id="addToCartModal">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                        <button class="buy-now" id="buyNowBtn">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Cart Button -->
+    <div class="floating-cart" id="cartButton">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <header>
+        <div class="logo">PakGrocers</div>
+        <div class="tagline">Your Online Grocery & Bakery Store in Pakistan</div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Groceries</a></li>
+            <li><a href="#">Bakery</a></li>
+            <li><a href="#">Daily Deals</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <div class="banner">
+            <div class="banner-content">
+                <h2>Fresh Groceries & Bakery Items Delivered</h2>
+                <p>Shop the best Pakistani brands – now featuring <strong>Golden Milk Latte Mix</strong> with exclusive discounts!</p>
+                <div class="countdown-timer">
+                    Flash Sale Ends In: 
+                    <span id="countdown-hours">02</span>h 
+                    <span id="countdown-minutes">30</span>m 
+                    <span id="countdown-seconds">45</span>s
+                </div>
+            </div>
+        </div>
+        
+        <!-- New: Quick Delivery Banner -->
+        <div class="delivery-banner">
+            <i class="fas fa-truck"></i>
+            <span>Free Delivery on orders over Rs. 1500 | Same-day delivery in major cities</span>
+        </div>
+        
+        <div class="categories">
+            <h3>Shop by Category</h3>
+            <div class="category-list">
+                <div class="category">
+                    <i class="fas fa-apple-alt"></i>
+                    <h4>Dry Fruits & Nuts</h4>
+                </div>
+                <div class="category">
+                    <i class="fas fa-pepper-hot"></i>
+                    <h4>Spices & Masalas</h4>
+                </div>
+                <div class="category">
+                    <i class="fas fa-utensils"></i>
+                    <h4>Rice & Pulses</h4>
+                </div>
+                <div class="category">
+                    <i class="fas fa-coffee"></i>
+                    <h4>Beverages</h4>
+                </div>
+                <div class="category">
+                    <i class="fas fa-bread-slice"></i>
+                    <h4>Bakery & Biscuits</h4>
+                </div>
+                <div class="category">
+                    <i class="fas fa-birthday-cake"></i>
+                    <h4>Cakes & Desserts</h4>
+                </div>
+                <div class="category">
+                    <i class="fas fa-heartbeat"></i>
+                    <h4>Wellness Drinks</h4>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Grocery Products Section -->
+        <div class="products-section">
+            <div class="section-title">
+                <h3>Popular Grocery Items</h3>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products">
+                <!-- Product 1 -->
+                <div class="product" onclick="showQuickView('National Kheer Mix', 'National Foods', 'https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 220, 250, 'National Kheer Mix is a premium quality instant kheer mix that makes delicious kheer in minutes. Made with the finest ingredients including milk solids, rice powder, and authentic spices.', '★★★★½ (128 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Bestseller</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">National Kheer Mix</div>
+                        <div class="product-brand">National Foods</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (128)
+                        </div>
+                        <div class="product-price">Rs. 220 <span class="original">Rs. 250</span> <span class="discount-badge">12% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'National Kheer Mix', 220)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product" onclick="showQuickView('Shan Biryani Masala', 'Shan Foods', 'https://images.unsplash.com/photo-1601643157091-ce5c665179ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 150, 150, 'Shan Biryani Masala is a perfect blend of spices that brings out the authentic taste of traditional biryani. It contains a balanced mix of spices that enhances the flavor of your biryani.', '★★★★ (95 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1601643157091-ce5c665179ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Limited Stock</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Shan Biryani Masala</div>
+                        <div class="product-brand">Shan Foods</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (95)
+                        </div>
+                        <div class="product-price">Rs. 150</div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Shan Biryani Masala', 150)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product" onclick="showQuickView('Nestlé Milkpak UHT Milk', 'Nestlé', 'https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 180, 200, 'Nestlé Milkpak UHT Milk is 100% pure cow milk with no added preservatives. It is UHT processed to retain maximum nutrients and has a long shelf life without refrigeration until opened.', '★★★★★ (210 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">New</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Nestlé Milkpak UHT Milk</div>
+                        <div class="product-brand">Nestlé</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            (210)
+                        </div>
+                        <div class="product-price">Rs. 180 <span class="original">Rs. 200</span> <span class="discount-badge">10% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Nestlé Milkpak UHT Milk', 180)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product" onclick="showQuickView('Mitchell\'s Fruit Jam', 'Mitchell\'s', 'https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 320, 320, 'Mitchell\'s Fruit Jam is made from the finest quality fruits with no artificial colors or preservatives. It has a rich fruity flavor and is perfect for breakfast toast, desserts, and baking.', '★★★★½ (156 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Popular</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Mitchell's Fruit Jam</div>
+                        <div class="product-brand">Mitchell's</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (156)
+                        </div>
+                        <div class="product-price">Rs. 320</div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Mitchell\'s Fruit Jam', 320)">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- New: Loyalty Program Section -->
+        <div class="loyalty-section">
+            <div class="loyalty-content">
+                <h3 class="loyalty-title">PakGrocers Loyalty Program</h3>
+                <p class="loyalty-description">
+                    Join our loyalty program and earn points with every purchase that can be redeemed for discounts on future orders. 
+                    The more you shop, the more you save!
+                </p>
+                <button class="buy-now">Join Now</button>
+                
+                <div class="loyalty-steps">
+                    <div class="loyalty-step">
+                        <i class="fas fa-user-plus"></i>
+                        <h4>Sign Up</h4>
+                        <p>Create your free account</p>
+                    </div>
+                    <div class="loyalty-step">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h4>Shop</h4>
+                        <p>Earn points with every purchase</p>
+                    </div>
+                    <div class="loyalty-step">
+                        <i class="fas fa-gift"></i>
+                        <h4>Redeem</h4>
+                        <p>Use points for discounts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bakery Products Section -->
+        <div class="products-section">
+            <div class="section-title">
+                <h3>Bakery & Biscuits</h3>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products">
+                <!-- Product 1 -->
+                <div class="product" onclick="showQuickView('English Cake Fruit', 'English Biscuit Manufacturers', 'https://images.unsplash.com/photo-1587241321921-91a834d6d191?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 450, 500, 'English Cake Fruit is a delicious fruit cake packed with raisins, cherries, and other dried fruits. It has a rich buttery flavor and moist texture, perfect for tea time or special occasions.', '★★★★ (87 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1587241321921-91a834d6d191?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Special Offer</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">English Cake Fruit</div>
+                        <div class="product-brand">English Biscuit Manufacturers</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (87)
+                        </div>
+                        <div class="product-price">Rs. 450 <span class="original">Rs. 500</span> <span class="discount-badge">10% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'English Cake Fruit', 450)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product" onclick="showQuickView('Peek Freans Sooper Biscuit', 'Peek Freans', 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 120, 120, 'Peek Freans Sooper Biscuit is a classic Pakistani biscuit with a delicious chocolate cream filling between two crispy biscuits. A perfect snack for all ages.', '★★★★★ (342 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Family Pack</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Peek Freans Sooper Biscuit</div>
+                        <div class="product-brand">Peek Freans</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            (342)
+                        </div>
+                        <div class="product-price">Rs. 120</div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Peek Freans Sooper Biscuit', 120)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product" onclick="showQuickView('Butter Cookies Tin', 'Shan Foods', 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 650, 700, 'Butter Cookies Tin contains premium quality butter cookies in an elegant reusable tin. These cookies have a rich buttery flavor and melt-in-your-mouth texture, perfect for gifting or special occasions.', '★★★★½ (112 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Gift Item</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Butter Cookies Tin</div>
+                        <div class="product-brand">Shan Foods</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (112)
+                        </div>
+                        <div class="product-price">Rs. 650 <span class="original">Rs. 700</span> <span class="discount-badge">7% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Butter Cookies Tin', 650)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product" onclick="showQuickView('Cake Rusk', 'Bisconni', 'https://images.unsplash.com/photo-1542826438-bd32f43d626f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 180, 180, 'Cake Rusk is a popular Pakistani snack made from lightly sweetened cake that is baked twice to achieve its characteristic crispness. Perfect for dipping in tea or coffee.', '★★★★ (198 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1542826438-bd32f43d626f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Local Favorite</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Cake Rusk</div>
+                        <div class="product-brand">Bisconni</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (198)
+                        </div>
+                        <div class="product-price">Rs. 180</div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Cake Rusk', 180)">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- New: Testimonials Section -->
+        <div class="testimonials-section">
+            <div class="section-title">
+                <h3>What Our Customers Say</h3>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="testimonials-container">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "PakGrocers has transformed my grocery shopping experience. The quality of products is consistently excellent, and delivery is always on time. Highly recommended!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('https://randomuser.me/api/portraits/women/32.jpg');"></div>
+                        <div class="author-info">
+                            <h4>Ayesha Khan</h4>
+                            <p>Lahore</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "I love the variety of international products available. The Golden Milk Latte Mix is my new favorite! Customer service is responsive and helpful."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/45.jpg');"></div>
+                        <div class="author-info">
+                            <h4>Ali Raza</h4>
+                            <p>Islamabad</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "As a busy professional, PakGrocers saves me so much time. The mobile app is easy to use, and I appreciate the same-day delivery option in Karachi."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('https://randomuser.me/api/portraits/women/68.jpg');"></div>
+                        <div class="author-info">
+                            <h4>Fatima Ahmed</h4>
+                            <p>Karachi</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "The loyalty program is fantastic! I've already redeemed points for discounts on multiple orders. The bakery items are always fresh and delicious."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/22.jpg');"></div>
+                        <div class="author-info">
+                            <h4>Usman Malik</h4>
+                            <p>Rawalpindi</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cakes & Desserts Section -->
+        <div class="products-section">
+            <div class="section-title">
+                <h3>Cakes & Desserts</h3>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products">
+                <!-- Product 1 -->
+                <div class="product" onclick="showQuickView('Chocolate Fudge Cake', 'Butlers Chocolate', 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 1200, 1500, 'Our Chocolate Fudge Cake is a chocolate lover\'s dream with multiple layers of moist chocolate cake, rich chocolate ganache, and a smooth chocolate buttercream frosting.', '★★★★★ (276 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Best Seller</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Chocolate Fudge Cake</div>
+                        <div class="product-brand">Butlers Chocolate</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            (276)
+                        </div>
+                        <div class="product-price">Rs. 1,200 <span class="original">Rs. 1,500</span> <span class="discount-badge">20% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Chocolate Fudge Cake', 1200)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product" onclick="showQuickView('Red Velvet Cake', 'Gourmet', 'https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 1500, 1500, 'Our signature Red Velvet Cake features moist red velvet layers with a hint of cocoa, filled and frosted with our classic cream cheese frosting. A timeless favorite!', '★★★★½ (143 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Premium</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Red Velvet Cake</div>
+                        <div class="product-brand">Gourmet</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (143)
+                        </div>
+                        <div class="product-price">Rs. 1,500</div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Red Velvet Cake', 1500)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product" onclick="showQuickView('Cupcakes (6 pcs)', 'Home Bakers', 'https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 800, 800, 'A set of 6 beautifully decorated cupcakes with your choice of flavors and frostings. Perfect for birthdays, office parties, or as a sweet treat for yourself!', '★★★★ (89 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">New</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Cupcakes (6 pcs)</div>
+                        <div class="product-brand">Home Bakers</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (89)
+                        </div>
+                        <div class="product-price">Rs. 800</div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Cupcakes (6 pcs)', 800)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product" onclick="showQuickView('Gulab Jamun Mix', 'Noor Sweets', 'https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 250, 300, 'Our Gulab Jamun Mix makes it easy to prepare perfect gulab jamuns at home. Just add water, shape into balls, fry, and soak in sugar syrup. Ready in minutes!', '★★★★★ (231 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Traditional</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Gulab Jamun Mix</div>
+                        <div class="product-brand">Noor Sweets</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            (231)
+                        </div>
+                        <div class="product-price">Rs. 250 <span class="original">Rs. 300</span> <span class="discount-badge">17% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Gulab Jamun Mix', 250)">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wellness & Superfoods Section -->
+        <div class="products-section">
+            <div class="section-title">
+                <h3>Wellness &amp; Superfoods</h3>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products">
+                <!-- Golden Milk -->
+                <div class="product" onclick="showQuickView('Golden Milk Latte Mix', 'Organic Turmeric Co.', 'https://images.unsplash.com/photo-1611654878701-67b3a6c33b4d?auto=format&fit=crop&w=300&q=80', 950, 1050, 'Our Golden Milk Latte Mix is a blend of organic turmeric, cinnamon, ginger, black pepper, and other warming spices. Just add hot milk for a comforting, health-boosting beverage.', '★★★★½ (176 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1611654878701-67b3a6c33b4d?auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Trending</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Golden Milk Latte Mix</div>
+                        <div class="product-brand">Organic Turmeric Co.</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (176)
+                        </div>
+                        <div class="product-price">Rs.&nbsp;950 <span class="original">Rs.&nbsp;1,050</span> <span class="discount-badge">10% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Golden Milk Latte Mix', 950)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product" onclick="showQuickView('Organic Chia Seeds', 'Healthy Harvest', 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 650, 750, 'Organic Chia Seeds are packed with omega-3 fatty acids, fiber, and protein. Add to smoothies, yogurt, or make chia pudding for a nutritious boost to your diet.', '★★★★ (132 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Organic</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Organic Chia Seeds</div>
+                        <div class="product-brand">Healthy Harvest</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (132)
+                        </div>
+                        <div class="product-price">Rs.&nbsp;650 <span class="original">Rs.&nbsp;750</span> <span class="discount-badge">13% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Organic Chia Seeds', 650)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product" onclick="showQuickView('Organic Honey', 'Nature\'s Gold', 'https://images.unsplash.com/photo-1519996529931-28324d5a630e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 850, 850, '100% pure organic honey collected from the pristine valleys of Northern Pakistan. Unprocessed and unpasteurized to retain all natural enzymes and health benefits.', '★★★★★ (298 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1519996529931-28324d5a630e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Immunity Booster</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Organic Honey</div>
+                        <div class="product-brand">Nature's Gold</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            (298)
+                        </div>
+                        <div class="product-price">Rs.&nbsp;850</div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Organic Honey', 850)">Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product" onclick="showQuickView('Green Tea Leaves', 'Pure Leaf', 'https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80', 550, 600, 'Premium quality green tea leaves sourced from the best tea gardens. Rich in antioxidants and known for its metabolism-boosting properties. Enjoy hot or cold.', '★★★½ (167 reviews)')">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');">
+                        <span class="product-badge">Detox</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Green Tea Leaves</div>
+                        <div class="product-brand">Pure Leaf</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            (167)
+                        </div>
+                        <div class="product-price">Rs.&nbsp;550 <span class="original">Rs.&nbsp;600</span> <span class="discount-badge">8% OFF</span></div>
+                        <a href="#" class="buy-now" onclick="addToCart(event, 'Green Tea Leaves', 550)">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- New: Newsletter Section -->
+        <div class="newsletter-section">
+            <h3 class="newsletter-title">Subscribe to Our Newsletter</h3>
+            <p class="newsletter-description">
+                Get the latest updates on new products, special offers, and exclusive discounts delivered straight to your inbox.
+            </p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                <button type="submit" class="newsletter-submit">Subscribe</button>
+            </form>
+        </div>
+        
+        <!-- Contact Us Section -->
+        <div class="contact-section" id="contact">
+            <h3>Contact Us</h3>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h4><i class="fas fa-headset"></i> Get in Touch</h4>
+                    <p>Have questions or need assistance? We're here to help!</p>
+                    
+                    <h4><i class="fas fa-phone-alt"></i> Customer Support</h4>
+                    <p><i class="fas fa-phone"></i> <strong>Phone:</strong> +92 322 8668488</p>
+                    <p><i class="fab fa-whatsapp"></i> <strong>WhatsApp:</strong> +92 322 8668488</p>
+                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info@pakgrocers.com</p>
+                    
+                    <h4><i class="far fa-clock"></i> Business Hours</h4>
+                    <p>Monday - Saturday: 9:00 AM to 7:00 PM</p>
+                    <p>Sunday: 10:00 AM to 5:00 PM</p>
+                    
+                    <h4><i class="fas fa-map-marker-alt"></i> Head Office</h4>
+                    <p>DHA Phase 8</p>
+                    <p>Rawalpindi, Punjab, Pakistan</p>
+                    
+                    <h4><i class="fas fa-share-alt"></i> Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h4><i class="fas fa-paper-plane"></i> Send Us a Message</h4>
+                    <form id="contactForm">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject">
+                        <textarea placeholder="Your Message" required></textarea>
+                        <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#contact">Contact Us</a>
+                <a href="#">FAQs</a>
+                <a href="#">Delivery Information</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 PakGrocers - All Rights Reserved</p>
+                <p>Partnered with Daraz Pakistan for online shopping</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loader = document.querySelector('.loader');
+            loader.classList.add('hidden');
+        });
+
+        // Scroll indicator
+        window.addEventListener('scroll', function() {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const scrollPercentage = (scrollPosition / scrollHeight) * 100;
+            scrollIndicator.style.width = scrollPercentage + '%';
+        });
+
+        // Cart functionality
+        let cartCount = 0;
+        const cartButton = document.getElementById('cartButton');
+        const cartCountElement = document.getElementById('cartCount');
+        const notification = document.getElementById('notification');
+
+        function addToCart(event, productName, price, quantity = 1) {
+            if (event) event.preventDefault();
+            cartCount += quantity;
+            cartCountElement.textContent = cartCount;
+            
+            // Animate cart button
+            cartButton.style.transform = 'scale(1.2)';
+            cartCountElement.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                cartButton.style.transform = 'scale(1)';
+                cartCountElement.style.transform = 'scale(1)';
+            }, 300);
+            
+            // Show notification
+            notification.textContent = `${productName} added to cart successfully!`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Here you would typically send the product data to your backend
+            console.log(`Added to cart: ${productName} - Rs. ${price} x ${quantity}`);
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6a00', '#046a38', '#ffc107', '#ffffff', '#01411c'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Create a feature highlight effect
+            const highlight = document.createElement('div');
+            highlight.className = 'feature-highlight';
+            contactForm.appendChild(highlight);
+            
+            // Remove highlight after animation
+            setTimeout(() => {
+                highlight.remove();
+            }, 2000);
+            
+            // Here you would typically send the form data to your backend
+            setTimeout(() => {
+                alert('Thank you for your message! We will get back to you soon.');
+                contactForm.reset();
+            }, 2000);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Product hover effects
+        const products = document.querySelectorAll('.product');
+        
+        products.forEach(product => {
+            product.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+                this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
+            });
+            
+            product.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            });
+        });
+
+        // Category hover effects
+        const categories = document.querySelectorAll('.category');
+        
+        categories.forEach(category => {
+            category.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.03)';
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.15)';
+            });
+            
+            category.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            });
+        });
+
+        // Social icon hover effects
+        const socialIcons = document.querySelectorAll('.social-icons a');
+        
+        socialIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.2)';
+            });
+            
+            icon.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add animation to banner text
+        const bannerContent = document.querySelector('.banner-content');
+        setInterval(() => {
+            bannerContent.style.animation = 'none';
+            setTimeout(() => {
+                bannerContent.style.animation = 'slideUp 1s ease-out, float 3s ease-in-out infinite';
+            }, 10);
+        }, 10000);
+        
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date();
+            const endOfDay = new Date();
+            endOfDay.setHours(23, 59, 59, 999);
+            
+            const diff = endOfDay - now;
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Quick View Modal
+        const quickViewModal = document.getElementById('quickViewModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBrand = document.getElementById('modalBrand');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalRating = document.getElementById('modalRating');
+        const quantityInput = document.getElementById('quantity');
+        const decreaseQty = document.getElementById('decreaseQty');
+        const increaseQty = document.getElementById('increaseQty');
+        const addToCartModal = document.getElementById('addToCartModal');
+        const buyNowBtn = document.getElementById('buyNowBtn');
+        
+        function showQuickView(title, brand, image, price, originalPrice, description, rating) {
+            modalImage.style.backgroundImage = `url('${image}')`;
+            modalTitle.textContent = title;
+            modalBrand.textContent = brand;
+            
+            if (originalPrice && originalPrice > price) {
+                modalPrice.innerHTML = `Rs. ${price} <span class="original">Rs. ${originalPrice}</span> <span class="discount-badge">${Math.round((originalPrice - price)/originalPrice*100)}% OFF</span>`;
+            } else {
+                modalPrice.textContent = `Rs. ${price}`;
+            }
+            
+            modalDescription.textContent = description;
+            modalRating.innerHTML = rating;
+            quantityInput.value = 1;
+            
+            quickViewModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        closeModal.addEventListener('click', function() {
+            quickViewModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        quickViewModal.addEventListener('click', function(e) {
+            if (e.target === quickViewModal) {
+                quickViewModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        decreaseQty.addEventListener('click', function() {
+            if (quantityInput.value > 1) {
+                quantityInput.value--;
+            }
+        });
+        
+        increaseQty.addEventListener('click', function() {
+            quantityInput.value++;
+        });
+        
+        addToCartModal.addEventListener('click', function() {
+            const productName = modalTitle.textContent;
+            const priceText = modalPrice.textContent;
+            const price = parseInt(priceText.match(/\d+/)[0]);
+            const quantity = parseInt(quantityInput.value);
+            
+            addToCart(null, productName, price, quantity);
+            quickViewModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        buyNowBtn.addEventListener('click', function() {
+            const productName = modalTitle.textContent;
+            const priceText = modalPrice.textContent;
+            const price = parseInt(priceText.match(/\d+/)[0]);
+            const quantity = parseInt(quantityInput.value);
+            
+            addToCart(null, productName, price, quantity);
+            quickViewModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // In a real implementation, this would redirect to checkout
+            alert(`Proceeding to checkout with ${quantity} x ${productName}`);
+        });
+        
+        // Newsletter form
+        const newsletterForm = document.getElementById('newsletterForm');
+        
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input').value;
+            
+            // Here you would typically send the email to your backend
+            alert(`Thank you for subscribing with ${email}! You'll receive our newsletter soon.`);
+            newsletterForm.reset();
+        });
+    </script>
+</body>
+</html>
